@@ -1,0 +1,43 @@
+<html lang="en">
+<%- include ('partials/header.ejs') -%>
+<body class="text-center">
+   <div class="container-fluid">
+     <div class="row">
+       <div class="col-8 offset-2">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Search</a></li>
+                <li class="breadcrumb-item"><a href="add-bundle">Add Bundle</a></li>
+                <li class="breadcrumb-item"><a href="#">Add Shelf</a></li>
+                <li class="breadcrumb-item"><a href="shelf">Single Shelf</a></li>
+                <li class="breadcrumb-item"><a href="shelves">Kanban System</a></li>
+          </ol>
+        </nav>
+       </div>
+      </div>
+       <div class="row">
+        <div class="col-8 offset-2">
+          <form class="form-signin">
+            <h2>Kanban System</h2>
+            <span><b><p>Add Shelf</p></b></span>
+              <!-- <label for="RfidTag" class="sr-only">RFID Tag No:</label> -->
+              <input type="text" id="rfid" class="form-control" placeholder="Scan RFID Tag" required="">
+              
+              <!-- <label for="RfidTag" class="sr-only">RFID Tag No:</label> -->
+              <select name="shelfe_name" id="" class="form-control">
+                  <option value="">Choose Shelf Name</option>
+                  <option value="">SURMA 01</option>
+                  <option value="">JAMUNA 01</option>
+                  <option value="">SURMA 02</option>
+              </select>
+              <br>
+              <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+          </form>
+         </div>
+       </div>
+     
+   </div> 
+</body>
+</html>
+
+
