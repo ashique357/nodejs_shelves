@@ -1,0 +1,53 @@
+<html lang="en">
+<%-include ('partials/header.ejs')-%>
+<body class="text-center">
+   <div class="container-fluid">
+     <div class="row">
+       <div class="col-8 offset-2">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/search">Search</a></li>
+                <li class="breadcrumb-item"><a href="/shelf/add">Add Shelf</a></li>
+                <li class="breadcrumb-item"><a href="/bundle/add">Add Bundle</a></li>
+                <li class="breadcrumb-item"><a href="/bundle/all">All Bundle</a></li>
+                <!-- <li class="breadcrumb-item"><a href="shelf">Single Shelf</a></li> -->
+                <!-- <li class="breadcrumb-item"><a href="shelves">Kanban System</a></li> -->
+          </ol>
+        </nav>
+       </div>
+      </div>
+      <div class="row">
+        <div class="col-4 offset-4">
+          <h3>ALL BUNDLE TAG</h3>
+        </div>
+      </div>
+       <div class="row">
+        <div class="col-8 offset-2">
+          <table class="table">
+              <thead>
+                  <th>RFID Tag Number</th>
+                  <th>Style</th>
+                  <th>Color</th>
+                  <th>Size</th>
+                  <th>Quantity</th>
+                  <th>Shelf Name</th>
+              </thead>
+              <tbody>
+                <% for(var i=0;i<data.length;i++){ %>
+                     <tr>
+                      <td><%=data[i].rfidBundle%> </td>
+                      <td><%=data[i].style%> </td>
+                      <td><%=data[i].color%> </td>
+                      <td><%=data[i].size%></td>
+                      <td><%=data[i].qty%></td>
+                      <td><%=data[i].shelf_id%></td>
+                  </tr>
+                  <% } %>
+              </tbody>
+          </table> 
+         </div>
+       </div>
+     
+   </div> 
+</body>
+</html>
