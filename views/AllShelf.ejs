@@ -19,7 +19,7 @@
       </div>
       <div class="row">
         <div class="col-4 offset-4">
-          <h3>ALL BUNDLE TAG</h3>
+          <h3>ALL Shelf TAG</h3>
         </div>
       </div>
        <div class="row">
@@ -27,28 +27,19 @@
           <table class="table">
               <thead>
                   <th>RFID Tag Number</th>
-                  <th>Style</th>
-                  <th>Color</th>
-                  <th>Size</th>
-                  <th>Quantity</th>
                   <th>Shelf Name</th>
               </thead>
               <tbody>
                 <% for(var i=0;i<data.length;i++){ %>
                      <tr>
-                      <td><%=data[i].id%> </td>
-                      <td><%=data[i].style%> </td>
-                      <td><%=data[i].color%> </td>
-                      <td><%=data[i].size%></td>
-                      <td><%=data[i].qty%></td>
-                      <td><%=data[i].shelf.shelfName%></td>
+                      <td><a href="/shelf/<%=data[i].id%>"><%=data[i].id%></a> </td>
+                      <td><a href="/shelf/<%=data[i].id%>"><%=data[i].shelfName%></a></td>
                   </tr>
                   <% } %>
               </tbody>
           </table> 
          </div>
        </div>
-     
    </div> 
 </body>
 </html>

@@ -17,7 +17,7 @@ router.post('/add', async(req, res,next) => {
     req.assert('shelfName','Please Provide Shelf Name').notEmpty();
     
     var errors=req.validationErrors();
-
+    
     var newShelf = await Shelf.build({
         id:req.body.id,
         shelfName:req.body.shelfName
@@ -28,44 +28,24 @@ router.post('/add', async(req, res,next) => {
       })
 })
 
-// router.get('/add/a',async(req,res,next)=>{
-//     req.assert('id','Please Provide RFID Tag Number').notEmpty();
-//     req.assert('shelfName','Please Provide Shelf Name').notEmpty();
+router.get('/all',async(req,res,next)=>{
+  Shelf.findAll({limit:10}).then(function(Shelf){
+    return res.render('AllShelf.ejs',{
+      data:Shelf
+    })
+  })
+})
 
-//     var errors=req.validationErrors();
-//     if(!errors){
-//         var shelf={
-//             id:req.sanitize('id').escape().trim(),
-//             shelfName:req.sanitize('shelfName').escape().trim()
-//         }
-        
-//     }
-//     else{
-//         var error_msg="";
-//         errors.forEach(function(error){
-//             error_msg+=error.msg +'<br>'
-//         });
-//         req.flash('error',error_msg);
-
-//         res.render('AddShelf.ejs',{
-//             title:'Add a shelf name',
-//             shelfName:req.body.shelfName,
-//             id:req.body.id
-//         })
-//     }
-// });
-
-// router.get('/api/shelf',function(req,res,next){
-//     connection.query('SELECT * FROM shelves ORDER BY rfid_shelf desc',function(err,rows){
-//         if(err){
-//             req.json('error',err);
-//             res.json(data);
-//         }
-//         else{
-//             res.json({data:rows});
-//         }
-//     });
-// });
+// router.get('/:id',async(req,res,next)=>{
+//   const id=req.params.id 
+//   Bundle.findAll({}
+//   ).then(function(Bundle){
+//     console.log(Bundle)
+//     return res.render('SingleShelf.ejs',{
+//       data:Bundle
+//     })
+//   })
+// })
 
 module.exports = router;
 
