@@ -39,7 +39,7 @@
               <input type="text" id="size" name="size" class="form-control" placeholder="Size" required="">
               <input type="text" id="color" name="color" class="form-control" placeholder="Color" required="">
               <input type="text" id="qty" name="qty" class="form-control" placeholder="Quantity" required="">
-              
+              <button onclick="client.subscribe('rfid/update/1', {qos: 2});">2. Subscribe</button>
               <select name="shelfId" id="shelf_id" class="form-control">
                 <% for(var i=0;i<data.length;i++){%>
                   <option value="<%=data[i].id %> "><%=data[i].shelfName %> </option>
@@ -51,7 +51,40 @@
           </form>
          </div>
        </div>
-     
+     <div id="message"></div>
    </div> 
 </body>
 </html>
+<script>
+//   var client=new Messaging.Client("broker.hivemq.com",8000);
+//   console.log(client)
+  
+//   var options = {
+
+// //connection attempt timeout in seconds
+// timeout: 3,
+
+// //Gets Called if the connection has successfully been established
+// onSuccess: function () {
+//     alert("Connected");
+// },
+
+// //Gets Called if the connection could not be established
+// onFailure: function (message) {
+//     alert("Connection failed: " + message.errorMessage);
+// }
+
+// };
+
+// //Attempt to connect
+// client.connect(options);
+//  client.onConnectionLost = function (responseObject) {
+//      //Depending on your scenario you could implement a reconnect logic here
+//      console.log("connection lost: " + responseObject.errorMessage);
+//  };
+
+//  client.onMessageArrived = function (message) {
+//      //Do something with the push message you received
+//      $('#messages').append('<span>Topic: ' + message.destinationName + '  | ' + message.payloadString + '</span><br/>');
+//  };
+</script>
