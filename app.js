@@ -56,6 +56,7 @@ var searchRouter=require('./controller/search');
 app.use('/search',searchRouter);
 
 
+
 app.listen(port,()=>{
     console.log(`Server is runnung on port:${port}`);
 });

@@ -39,7 +39,7 @@
               <input type="text" id="size" name="size" class="form-control" placeholder="Size" required="">
               <input type="text" id="color" name="color" class="form-control" placeholder="Color" required="">
               <input type="text" id="qty" name="qty" class="form-control" placeholder="Quantity" required="">
-              <button onclick="client.subscribe('rfid/update/1', {qos: 2});">2. Subscribe</button>
+              <input type="text" id="data">
               <select name="shelfId" id="shelf_id" class="form-control">
                 <% for(var i=0;i<data.length;i++){%>
                   <option value="<%=data[i].id %> "><%=data[i].shelfName %> </option>
@@ -51,40 +51,58 @@
           </form>
          </div>
        </div>
-     <div id="message"></div>
    </div> 
 </body>
 </html>
-<script>
-//   var client=new Messaging.Client("broker.hivemq.com",8000);
-//   console.log(client)
-  
-//   var options = {
 
-// //connection attempt timeout in seconds
-// timeout: 3,
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.js" type="text/javascript"></script>
 
-// //Gets Called if the connection has successfully been established
-// onSuccess: function () {
-//     alert("Connected");
-// },
+<script type="text/javascript">
+ var mqttBrokerUrl="broker.hivemq.com";
+ var ClientID="mycleintID_"+parseInt(Math.random()*100,10);
+ var port="8000";
+ var topic="rfid/test";
+ var client = new Paho.Client(mqttBrokerUrl, Number(port), ClientID);
 
-// //Gets Called if the connection could not be established
-// onFailure: function (message) {
-//     alert("Connection failed: " + message.errorMessage);
-// }
+client.onConnectionLost = onConnectionLost;
+client.onMessageArrived = onMessageArrived;
 
-// };
+// connect the client
+client.connect({onSuccess:onConnect});
 
-// //Attempt to connect
-// client.connect(options);
-//  client.onConnectionLost = function (responseObject) {
-//      //Depending on your scenario you could implement a reconnect logic here
-//      console.log("connection lost: " + responseObject.errorMessage);
-//  };
+// called when the client connects
+function onConnect() {
+  // Once a connection has been made, make a subscription and send a message.
+  // console.log("onConnect");
+  var subTopic="rfid/test";
+  client.subscribe(subTopic);
+  // message = new Paho.Message("Hello");
+  // message.destinationName = "World";
+  // client.send(message);
+}
 
-//  client.onMessageArrived = function (message) {
-//      //Do something with the push message you received
-//      $('#messages').append('<span>Topic: ' + message.destinationName + '  | ' + message.payloadString + '</span><br/>');
-//  };
+// called when the client loses its connection
+function onConnectionLost(responseObject) {
+  if (responseObject.errorCode !== 0) {
+    console.log("onConnectionLost:"+responseObject.errorMessage);
+  }
+}
+
+// called when a message arrives
+function onMessageArrived(message) {
+  console.log("onMessageArrived:"+message.payloadString);
+}
+
+ function onConnectionLost(responseObj){
+  if(responseObj.errorCode !=0){
+    console.log(responseObj.errorMessage)
+  }
+ }
+
+ function onMessageArrived(message){
+   document.getElementById("rfidBundle").value=message.payloadString;
+    
+   //  return message.payloadString;
+ }
+ 
 </script>

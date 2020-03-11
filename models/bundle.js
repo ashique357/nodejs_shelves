@@ -10,7 +10,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Bundle.associate = function(models) {
     // associations can be defined here
-    Bundle.belongsTo(models.Shelf, {foreignKey: 'shelfId', as: 'shelf'})
+    Bundle.belongsTo(models.Shelf, {foreignKey: 'shelfId', as: 'shelf'});
+    Bundle.hasOne(models.Kanban, {as: 'kanbans'})
+    
   };
   return Bundle;
 };
