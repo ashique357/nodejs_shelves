@@ -34,12 +34,11 @@
             <h2>Kanban System</h2>
             
             <span><b><p>Add Bundle</p></b></span>
-              <input type="text" id="rfidBundle" name="id" class="form-control" placeholder="Scan RFID Tag" required="">
+              <input type="text" id="rfidBundle" name="id" class="form-control" placeholder="Scan RFID Tag" required="" readonly>
               <input type="text" id="style" name="style" class="form-control" placeholder="Style" required="">
               <input type="text" id="size" name="size" class="form-control" placeholder="Size" required="">
               <input type="text" id="color" name="color" class="form-control" placeholder="Color" required="">
               <input type="text" id="qty" name="qty" class="form-control" placeholder="Quantity" required="">
-              <input type="text" id="data">
               <select name="shelfId" id="shelf_id" class="form-control">
                 <% for(var i=0;i<data.length;i++){%>
                   <option value="<%=data[i].id %> "><%=data[i].shelfName %> </option>
@@ -61,7 +60,7 @@
  var mqttBrokerUrl="broker.hivemq.com";
  var ClientID="mycleintID_"+parseInt(Math.random()*100,10);
  var port="8000";
- var topic="rfid/test";
+ var topic="rfid/ws/tagNumber";
  var client = new Paho.Client(mqttBrokerUrl, Number(port), ClientID);
 
 client.onConnectionLost = onConnectionLost;
@@ -74,7 +73,7 @@ client.connect({onSuccess:onConnect});
 function onConnect() {
   // Once a connection has been made, make a subscription and send a message.
   // console.log("onConnect");
-  var subTopic="rfid/test";
+  var subTopic="rfid/ws/tagNumber";
   client.subscribe(subTopic);
   // message = new Paho.Message("Hello");
   // message.destinationName = "World";

@@ -1,8 +1,14 @@
 #include <ESP8266WiFi.h>        // Include the Wi-Fi library
 #include <PubSubClient.h>
+#include "MFRC522.h" 
 
-const char* ssid     = "FKL_CUTTING";         // The SSID (name) of the Wi-Fi network you want to connect to
-const char* password = "%%CUT$$DG@@TING";     // The password of the Wi-Fi network
+#define RST_PIN         D1          // Configurable, see typical pin layout above
+#define SS_PIN          D2         // Configurable, see typical pin layout above
+
+
+const char* ssid     = "RFID";         // The SSID (name) of the Wi-Fi network you want to connect to
+const char* password = "12345678";     // The password of the Wi-Fi network
+
 
 const char* mqttBroker = "broker.hivemq.com";
 //byte mqttBroker={5,196,95,208};
@@ -10,9 +16,12 @@ const int port=1883;
 //const int webPort=8000;
 const char* mqttUser = "user";
 const char* mqttPassword = "user";
+char message_buff[100];
+
 
 WiFiClient esp8266_client;
 PubSubClient client(esp8266_client);
+MFRC522 mfrc522(SS_PIN, RST_PIN); 
 
 void callback(char* topic, byte* payload, unsigned int length) {
  
@@ -30,11 +39,15 @@ void callback(char* topic, byte* payload, unsigned int length) {
 }
 
 void setup() {
-  Serial.begin(115200);         // Start the Serial communication to send messages to the computer
+  Serial.begin(74880);         // Start the Serial communication to send messages to the computer
   delay(10);
   Serial.println('\n');
+ 
+  SPI.begin(); // open SPI connection
+  mfrc522.PCD_Init(); // Initialize Proximity Coupling Device (PCD)
   
   WiFi.begin(ssid, password);             // Connect to the network
+ 
   Serial.print("Connecting to ");
   Serial.print(ssid); Serial.println(" ...");
 
@@ -64,26 +77,28 @@ void setup() {
       }
   }
 //  client.subscribe("rfid/test");
-  client.publish("rfid/all", "Getting Data");
+//  client.publish("rfid/all", "Getting Data");
 }
 
 void loop() {
 client.loop();
-   int a=1;
-   int rfid=1;
-   int existing_data=1;
-   int result=1;
-   if(rfid==1){
-    if(existing_data==1){
-      if(result=1){
-        client.publish("rfid/update/1","Status=1");
-        }
-       else{
-        client.subscribe("rfid/redirect");
-        }
-      }
-      else{
-        client.subscribe("rfid/test");
-        }
-    } 
- }
+   if ( ! mfrc522.PICC_IsNewCardPresent()) {
+    return;
+  }
+  // Select one of the cards
+  if ( ! mfrc522.PICC_ReadCardSerial())return;
+  Serial.print("Card UID:");//Dump UID
+  String rfidUid = "";
+  for (byte i = 0; i < mfrc522.uid.size; i++) {
+    rfidUid += String(mfrc522.uid.uidByte[i] < 0x10 ? "0" : "");
+    rfidUid += String(mfrc522.uid.uidByte[i], HEX);
+  }
+
+  Serial.println(rfidUid);
+  Serial.println("");
+  rfidUid.toCharArray(message_buff, rfidUid.length() + 1);
+  client.publish("rfid/ws/tagNumber", message_buff);
+
+  
+}
+ 

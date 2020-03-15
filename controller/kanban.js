@@ -1,50 +1,19 @@
 var mqtt = require('mqtt');
-var mqttBrokerUrl="broker.hivemq.com";
- var ClientID="mycleintID_"+parseInt(Math.random()*100,10);
- var port=1883;
- //var topic="rfid/test";
- var client = mqtt.connect({mqttBrokerUrl,port});
-    console.log(client);
-client.onConnectionLost = onConnectionLost;
-client.onMessageArrived = onMessageArrived;
-client.onConnect=onConnect;
-// connect the client
-// client.connect({onSuccess:onConnect});
+var client  = mqtt.connect('mqtt://test.mosquitto.org')
 
-// called when the client connects
-function onConnect() {
-  // Once a connection has been made, make a subscription and send a message.
-  // console.log("onConnect");
-  var subTopic="rfid/test";
-  client.subscribe(subTopic);
-  // message = new Paho.Message("Hello");
-  // message.destinationName = "World";
-  // client.send(message);
-}
+client.on('connect', function () {
+  client.subscribe('presence', function (err) {
+    if (!err) {
+      client.publish('presence', 'Hello mqtt')
+    }
+  })
+})
 
-// called when the client loses its connection
-function onConnectionLost(responseObject) {
-  if (responseObject.errorCode !== 0) {
-    console.log("onConnectionLost:"+responseObject.errorMessage);
-  }
-}
-
-// called when a message arrives
-function onMessageArrived(message) {
-  console.log("onMessageArrived:"+message.payloadString);
-}
-
- function onConnectionLost(responseObj){
-  if(responseObj.errorCode !=0){
-    console.log(responseObj.errorMessage)
-  }
- }
-
- function onMessageArrived(message){
-//    document.getElementById("rfidBundle").value=message.payloadString;
-    console.log(message)
-   //  return message.payloadString;
- }
+client.on('message', function (topic, message) {
+  // message is Buffer
+  console.log(message.toString())
+  client.end()
+})
 
 var mysql = require('mysql');
 
