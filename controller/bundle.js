@@ -32,9 +32,11 @@ bundle.post('/add', async(req, res,next) => {
         size:req.body.size,
         color:req.body.color,
         qty:req.body.qty,
-        shelfId:req.body.shelfId
+        shelfId:req.body.shelfId,
+        status:'0'
       });
       newBundle.save().then(function() {
+
         req.flash('success','Successfully Bundle Added');
         return res.redirect('/bundle/add');
       })

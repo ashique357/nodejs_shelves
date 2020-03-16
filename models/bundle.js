@@ -6,7 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     color: DataTypes.STRING,
     size: DataTypes.STRING,
     qty: DataTypes.STRING,
-    shelfId: DataTypes.STRING
+    shelfId: DataTypes.STRING,
+    status:DataTypes.BOOLEAN
   }, {});
   Bundle.associate = function(models) {
     // associations can be defined here
