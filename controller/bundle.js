@@ -51,5 +51,15 @@ bundle.get('/all',function(req,res,next){
     })
 });
 
+bundle.get('/kanban',function(req,res,next){
+    Shelf.findAll({limit:10,include: [{model: Bundle, as: 'bundles',
+    where: { status:'1'}}]}).then(function(Shelf){
+        return res.render('Kanban.ejs',{
+            data:Shelf
+        })
+    })
+});
+
+
 module.exports = bundle;
 

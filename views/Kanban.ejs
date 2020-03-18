@@ -1,5 +1,5 @@
 <html lang="en">
-<%- include ('partials/header.ejs') -%>
+<%- include ('partials/kanban_partial.ejs') -%>
 
     <body class="text-center">
         <div class="container-fluid">
@@ -14,7 +14,7 @@
                             <li class="breadcrumb-item"><a href="/shelf/add">Add Shelf</a></li>
                             <li class="breadcrumb-item"><a href="/bundle/all">All Bundle</a></li>
                             <li class="breadcrumb-item"><a href="/shelf/all">All Shelf</a></li>
-                            <!-- <li class="breadcrumb-item"><a href="shelf">Single Shelf</a></li> -->
+                            <li class="breadcrumb-item"><a href="/bundle/kanban">Kanban</a></li>
                             <!-- <li class="breadcrumb-item"><a href="shelves">Kanban System</a></li> -->
                         </ol>
                     </nav>
@@ -27,36 +27,24 @@
             </div>
 
             <div class="row">
+                <% for(var i=0;i<data.length;i++){ %>
                 <div class="col-4 border">
-                    <h4>SHURMA 01</h4>
+                    <h4><%=data[i].shelfName %> </h4>
                     <table class="table">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item" style="background-color: black; color: #fff;"><span> <b>Shelf Tag :</b></span>34535453345</li>
-                            <li class="list-group-item"><span> <b>Bundle Tag:</b></span>2352341231</li>
-                            <li class="list-group-item"><b>Bundle Tag:</b></span>7678787667</li>
+                            <li class="list-group-item" style="background-color: black; color: #fff;"><span> <b>Shelf Tag :</b></span><%=data[i].id %></li>
+                            <% for(var j=0;j<data[i].bundles.length;j++){ %>
+                                <li class="list-group-item"><span> <b>Bundle Tag :</b></span><%= data[i].bundles[j].id%> </li>
+                                <li class="list-group-item"><span> <b>Style :</b></span><%= data[i].bundles[j].style%> </li>
+                                <li class="list-group-item"><span> <b>Color :</b></span><%= data[i].bundles[j].color%> </li>
+                                <li class="list-group-item"><span> <b>Size :</b></span><%= data[i].bundles[j].size%> </li>
+                                <li class="list-group-item"><span> <b>Quantity :</b></span><%= data[i].bundles[j].qty%> </li>
+                            <% } %>   
                         </ul>
                     </table>
                 </div>
-                <div class="col-4 border">
-                    <h4>JAMUNA 01</h4>
-                    <table class="table">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item" style="background-color: black; color: #fff;"><span> <b>Shelf Tag :</b></span>34535453345</li>
-                            <li class="list-group-item"><span> <b>Bundle Tag:</b></span>2352341231</li>
-                            <li class="list-group-item"><b>Bundle Tag:</b></span>7678787667</li>
-                        </ul>
-                    </table>
-                </div>
-                <div class="col-4 border">
-                    <h4>SHURMA 02</h4>
-                    <table class="table">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item" style="background-color: black; color: #fff;"><span> <b>Shelf Tag :</b></span>34535453345</li>
-                            <li class="list-group-item"><span> <b>Bundle Tag:</b></span>2352341231</li>
-                            <li class="list-group-item"><b>Bundle Tag:</b></span>7678787667</li>
-                        </ul>
-                    </table>
-                </div>
+                <% } %>
+                
             </div>
         </div>
         </div>
